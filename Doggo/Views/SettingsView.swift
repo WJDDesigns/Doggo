@@ -16,6 +16,14 @@ struct SettingsView: View {
                 } footer: {
                     Text("Tone and vibrate always work. Static is off until you turn it on.")
                 }
+                Section {
+                    Stepper("Cue cooldown \(Int(store.boundaryCooldownSeconds)) s", value: $store.boundaryCooldownSeconds,
+                            in: 10...300, step: 10)
+                } header: {
+                    Text("Fences")
+                } footer: {
+                    Text("How long Doggo waits before cueing the same dog again after it leaves a fence.")
+                }
                 Section("Collars") {
                     LabeledContent("Halo One", value: "Not connected")
                     LabeledContent("PetSafe Guardian GPS 2.0", value: "Not connected")

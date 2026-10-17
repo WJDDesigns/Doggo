@@ -6,6 +6,9 @@ send tone/vibrate/static manually, and later add ESP32 Bluetooth beacons that wa
 ## Status
 
 - iPhone app skeleton with demo dogs, map, manual commands and static safety limits.
+- Fences modeled on the PetSafe app: circular safe zones you draw on a map, a pet card per dog
+  ("Backyard • 5 min ago", GPS quality, battery and charging), and a tone or vibrate cue when a dog
+  walks out of a fence. Fence cues never use static.
 - Halo and Guardian connections are placeholders (neither company has a public API).
 - ESP32 beacons: not started.
 
@@ -24,3 +27,4 @@ open Doggo.xcodeproj
 - `Doggo/Services/CollarProvider.swift`: the interface each collar brand implements.
 - `Doggo/Services/SafetyPolicy.swift`: static is off by default, capped, and rate limited.
 - `Doggo/Services/MockCollarProvider.swift`: demo dogs used until real collars are connected.
+- `Doggo/Models/Fence.swift` and `Doggo/Views/FencesView.swift`: fences and the fence editor.

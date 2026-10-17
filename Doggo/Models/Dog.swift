@@ -7,6 +7,12 @@ enum CollarBrand: String, Codable, CaseIterable {
     case mock = "Demo"
 }
 
+enum GPSSignal: String, Codable {
+    case good = "Good"
+    case fair = "Fair"
+    case poor = "Poor"
+}
+
 struct Dog: Identifiable, Hashable {
     let id: String
     var name: String
@@ -14,6 +20,8 @@ struct Dog: Identifiable, Hashable {
     var location: CLLocationCoordinate2D?
     var batteryPercent: Int?
     var lastUpdated: Date?
+    var gpsSignal: GPSSignal?
+    var isCharging = false
 
     static func == (lhs: Dog, rhs: Dog) -> Bool {
         lhs.id == rhs.id && lhs.lastUpdated == rhs.lastUpdated
@@ -44,4 +52,6 @@ struct CommandEvent: Identifiable {
     let date: Date
     let succeeded: Bool
     let detail: String?
+    /// Why it was sent when Doggo sent it on its own, e.g. "Left Backyard".
+    var reason: String? = nil
 }
