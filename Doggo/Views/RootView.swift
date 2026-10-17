@@ -5,6 +5,8 @@ struct RootView: View {
         TabView {
             DogMapView()
                 .tabItem { Label("Map", systemImage: "map") }
+            FencesView()
+                .tabItem { Label("Fences", systemImage: "square.dashed") }
             CommandsView()
                 .tabItem { Label("Commands", systemImage: "dot.radiowaves.left.and.right") }
             SettingsView()

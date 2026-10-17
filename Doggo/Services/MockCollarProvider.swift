@@ -8,9 +8,9 @@ actor MockCollarProvider: CollarProvider {
 
     private var dogs: [Dog] = [
         Dog(id: "demo-1", name: "Demo Halo Dog", brand: .mock,
-            location: CLLocationCoordinate2D(latitude: 27.9506, longitude: -82.4572), batteryPercent: 82),
+            location: CLLocationCoordinate2D(latitude: 27.9506, longitude: -82.4572), batteryPercent: 82, gpsSignal: .good),
         Dog(id: "demo-2", name: "Demo Guardian Dog", brand: .mock,
-            location: CLLocationCoordinate2D(latitude: 27.9509, longitude: -82.4566), batteryPercent: 64),
+            location: CLLocationCoordinate2D(latitude: 27.9509, longitude: -82.4566), batteryPercent: 64, gpsSignal: .fair, isCharging: true),
     ]
 
     func fetchDogs() async throws -> [Dog] {

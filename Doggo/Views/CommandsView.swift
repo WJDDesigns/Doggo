@@ -30,6 +30,9 @@ struct CommandsView: View {
                                 .foregroundStyle(event.succeeded ? .green : .red)
                             VStack(alignment: .leading) {
                                 Text(event.command.label)
+                                if let reason = event.reason {
+                                    Text(reason).font(.caption).foregroundStyle(.secondary)
+                                }
                                 if let detail = event.detail {
                                     Text(detail).font(.caption).foregroundStyle(.secondary)
                                 }
