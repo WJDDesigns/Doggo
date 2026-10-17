@@ -22,6 +22,8 @@ struct Dog: Identifiable, Hashable {
     var lastUpdated: Date?
     var gpsSignal: GPSSignal?
     var isCharging = false
+    /// Set when Doggo can't command this collar directly and hands off to the maker's app (e.g. Halo).
+    var appHandoff: AppHandoff? = nil
 
     static func == (lhs: Dog, rhs: Dog) -> Bool {
         lhs.id == rhs.id && lhs.lastUpdated == rhs.lastUpdated

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CommandsView: View {
     @Environment(DogStore.self) private var store
+    @Environment(\.openURL) private var openURL
     @State private var staticLevel = 1
 
     var body: some View {
@@ -9,16 +10,27 @@ struct CommandsView: View {
             List {
                 ForEach(store.dogs) { dog in
                     Section(dog.name) {
-                        HStack {
-                            Button("Tone") { send(.tone, to: dog) }
-                            Spacer()
-                            Button("Vibrate") { send(.vibrate, to: dog) }
-                        }
-                        .buttonStyle(.bordered)
-                        if store.safety.staticEnabled {
-                            Stepper("Static level \(staticLevel)", value: $staticLevel, in: 1...store.safety.maxStaticLevel)
-                            Button("Send static \(staticLevel)", role: .destructive) {
-                                send(.staticCorrection(level: staticLevel), to: dog)
+                        if let handoff = dog.appHandoff {
+                            Button {
+                                open(handoff)
+                            } label: {
+                                Label("Open in \(handoff.appName) app", systemImage: "arrow.up.forward.app")
+                            }
+                            Text(handoff.note)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            HStack {
+                                Button("Tone") { send(.tone, to: dog) }
+                                Spacer()
+                                Button("Vibrate") { send(.vibrate, to: dog) }
+                            }
+                            .buttonStyle(.bordered)
+                            if store.safety.staticEnabled {
+                                Stepper("Static level \(staticLevel)", value: $staticLevel, in: 1...store.safety.maxStaticLevel)
+                                Button("Send static \(staticLevel)", role: .destructive) {
+                                    send(.staticCorrection(level: staticLevel), to: dog)
+                                }
                             }
                         }
                     }
@@ -49,5 +61,12 @@ struct CommandsView: View {
 
     private func send(_ command: CollarCommand, to dog: Dog) {
         Task { await store.send(command, to: dog) }
+    }
+
+    /// Open the maker's app, falling back to its App Store page if it isn't installed.
+    private func open(_ handoff: AppHandoff) {
+        openURL(handoff.scheme) { opened in
+            if !opened { openURL(handoff.appStore) }
+        }
     }
 }
